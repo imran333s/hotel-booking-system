@@ -1,0 +1,87 @@
+/* Navbar wrapper */
+.navbar {
+  width: 100%;
+  background-color: #1e293b; /* dark blue */
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+/* Inner container */
+.navbar-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 14px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo a {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* Nav links */
+.nav-links {
+  display: flex;
+  gap: 22px;
+}
+
+.nav-links a {
+  color: #e5e7eb;
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #38bdf8;
+}
+
+/* Auth buttons */
+.auth-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  padding: 7px 14px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 0.3s;
+}
+
+.login-btn {
+  background: transparent;
+  color: #ffffff;
+  border: 1px solid #38bdf8;
+}
+
+.login-btn:hover {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.register-btn {
+  background: #38bdf8;
+  color: #0f172a;
+}
+
+.register-btn:hover {
+  background: #0ea5e9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}
