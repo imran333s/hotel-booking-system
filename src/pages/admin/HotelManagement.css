@@ -1,0 +1,51 @@
+.hotel-main-content {
+  padding: 40px;
+}
+
+.hotel-section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.hotel-add-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.hotel-add-form input {
+  padding: 8px;
+  flex: 1;
+}
+
+.hotel-add-form button {
+  padding: 8px 15px;
+  background: #111827;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.hotel-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hotel-list-table th,
+.hotel-list-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.actions-cell button {
+  margin-right: 5px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.actions-cell button:hover {
+  opacity: 0.8;
+}

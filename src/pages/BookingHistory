@@ -1,0 +1,81 @@
+// import React, { useEffect, useState, useContext } from "react";
+// import axios from "axios";
+// import Loader from "../components/Loader";
+// import AuthContext from "../context/AuthContext";
+// import Swal from "sweetalert2";
+
+// const BookingHistory = () => {
+//   const { user } = useContext(AuthContext);
+//   const [bookings, setBookings] = useState([]);
+//   const [loading, setLoading] = useState(true);
+
+//   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
+//   const token = localStorage.getItem("token");
+
+//   useEffect(() => {
+//     const fetchBookings = async () => {
+//       try {
+//         const res = await axios.get(`${API_URL}/api/bookings`);
+//         setBookings(res.data.filter(b => b.user?._id === user._id));
+//       } catch (err) { console.error(err); }
+//       finally { setLoading(false); }
+//     };
+//     fetchBookings();
+//   }, [API_URL, user]);
+
+//   const cancelBooking = async (id) => {
+//     const result = await Swal.fire({
+//       title: "Cancel this booking?",
+//       icon: "warning",
+//       showCancelButton: true,
+//       confirmButtonText: "Yes, cancel",
+//     });
+
+//     if (!result.isConfirmed) return;
+
+//     try {
+//       await axios.put(`${API_URL}/api/bookings/${id}`, { status: "Cancelled" }, {
+//         headers: { Authorization: `Bearer ${token}` },
+//       });
+//       setBookings(prev => prev.map(b => b._id === id ? { ...b, status: "Cancelled" } : b));
+//       Swal.fire("Cancelled!", "Your booking has been cancelled.", "success");
+//     } catch (err) {
+//       console.error(err);
+//       Swal.fire("Error!", "Failed to cancel booking.", "error");
+//     }
+//   };
+
+//   if (loading) return <Loader text="Loading your bookings..." />;
+
+//   return (
+//     <div style={{ padding: "40px" }}>
+//       <h2>Booking History</h2>
+//       {bookings.length === 0 ? <p>No bookings found</p> :
+//         <table style={{ width: "100%", borderCollapse: "collapse" }}>
+//           <thead>
+//             <tr>
+//               <th>S.No</th>
+//               <th>Hotel</th>
+//               <th>Status</th>
+//               <th>Action</th>
+//             </tr>
+//           </thead>
+//           <tbody>
+//             {bookings.map((b, idx) => (
+//               <tr key={b._id}>
+//                 <td>{idx + 1}</td>
+//                 <td>{b.hotel?.name}</td>
+//                 <td>{b.status}</td>
+//                 <td>
+//                   {b.status === "Booked" && <button onClick={() => cancelBooking(b._id)}>Cancel</button>}
+//                 </td>
+//               </tr>
+//             ))}
+//           </tbody>
+//         </table>
+//       }
+//     </div>
+//   );
+// };
+
+// export default BookingHistory;

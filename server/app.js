@@ -7,7 +7,7 @@ const connectDB = require("./config/db");
 connectDB();
 
 const app = express();
-
+const bookingStatsRoutes = require("./routes/dashboardRoutes"); 
 // Middleware
 app.use(cors());
 app.use(express.json());
@@ -18,5 +18,5 @@ app.use("/api/users", require("./routes/userRoutes"));
 app.use("/api/hotels", require("./routes/hotelRoutes"));
 app.use("/api/bookings", require("./routes/bookingRoutes"));
 app.use("/api/blogs", require("./routes/blogRoutes"));
-
+app.use("/api", bookingStatsRoutes);
 module.exports = app;

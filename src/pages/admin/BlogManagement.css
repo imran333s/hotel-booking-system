@@ -1,0 +1,53 @@
+.blog-main-content {
+  padding: 40px;
+}
+
+.blog-section-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.blog-add-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.blog-add-form input,
+.blog-add-form textarea {
+  padding: 8px;
+  width: 100%;
+}
+
+.blog-add-form button {
+  padding: 8px 15px;
+  background: #111827;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.blog-list-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.blog-list-table th,
+.blog-list-table td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.actions-cell button {
+  margin-right: 5px;
+  padding: 5px 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.actions-cell button:hover {
+  opacity: 0.8;
+}
