@@ -1,5 +1,6 @@
-import "./Home.css";
+// src/pages/Home.jsx
 import { Link } from "react-router-dom";
+import "./Home.css";
 
 const Home = () => {
   return (
@@ -32,10 +33,14 @@ const Home = () => {
           </div>
           <div className="feature-card">
             <h3>24/7 Support</h3>
-            <p>We are always here to help you.</p>
+            <p>We are always here to help you anytime.</p>
           </div>
         </div>
       </section>
+
+     
+
+  
     </div>
   );
 };

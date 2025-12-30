@@ -45,7 +45,7 @@ const AdminDashboardStats = () => {
     return (
       <div className="dashboard-container loading-state">
         <div className="spinner"></div>
-        <p>Loading booking stats...</p>
+        <p>Loading Dashboard...</p>
       </div>
     );
   }
@@ -66,17 +66,16 @@ const AdminDashboardStats = () => {
     );
   }
 
-const boxes = [
-  { title: "Total Bookings", value: stats.totalBookings || 0 },
-  { title: "Booked", value: stats.booked || 0 },
-  { title: "Cancelled", value: stats.cancelled || 0 },
-  { title: "Successful", value: stats.successful || 0 },
-  { title: "Total Superadmins", value: stats.totalAdmins || 0 },
-  { title: "Total Managers", value: stats.totalManagers || 0 },
-  { title: "Total Receptionists", value: stats.totalReceptionists || 0 },
-  { title: "Total Users", value: stats.totalUsers || 0 },
-];
-
+  const boxes = [
+    { title: "Total Bookings", value: stats.totalBookings || 0 },
+    { title: "Booked", value: stats.booked || 0 },
+    { title: "Cancelled", value: stats.cancelled || 0 },
+    { title: "Successful", value: stats.successful || 0 },
+    { title: "Total Superadmins", value: stats.totalAdmins || 0 },
+    { title: "Total Managers", value: stats.totalManagers || 0 },
+    { title: "Total Receptionists", value: stats.totalReceptionists || 0 },
+    { title: "Total Users", value: stats.totalUsers || 0 },
+  ];
 
   return (
     <div className="dashboard-container">

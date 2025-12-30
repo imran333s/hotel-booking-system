@@ -1,0 +1,85 @@
+/* ===== PAGE ===== */
+.add-hotel-container {
+  background: #f3f4f6;
+  padding: 24px;
+}
+
+/* ===== TITLE ===== */
+.add-hotel-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* ===== FORM GRID ===== */
+.add-hotel-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* ✅ 4 inputs per row */
+  gap: 16px;
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 12px;
+  max-width: 1100px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+}
+
+/* ===== INPUTS ===== */
+.add-hotel-form input,
+.add-hotel-form textarea {
+  padding: 11px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.add-hotel-form input:focus,
+.add-hotel-form textarea:focus {
+  outline: none;
+  border-color: #16a34a;
+}
+
+/* ===== TEXTAREA ===== */
+.add-hotel-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ===== SPAN HELPERS ===== */
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-4 {
+  grid-column: span 4;
+}
+
+/* ===== ACTION BUTTONS ===== */
+.add-hotel-actions {
+  grid-column: span 4;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.add-hotel-submit {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.add-hotel-submit:hover {
+  background: #15803d;
+}
+
+.add-hotel-cancel {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}

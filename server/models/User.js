@@ -11,11 +11,11 @@ const userSchema = new mongoose.Schema({
     default: "user",
   },
   status: { type: String, enum: ["active", "inactive"], default: "active" },
+  wishlist: [{ type: mongoose.Schema.Types.ObjectId, ref: "Hotel" }], // ✅ Wishlist field
   createdAt: { type: Date, default: Date.now },
 });
 
 // 🔐 Hash password before saving
-
 userSchema.pre("save", async function () {
   if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);

@@ -1,0 +1,93 @@
+/* ===== OVERLAY ===== */
+.edit-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+/* ===== MODAL ===== */
+.edit-modal {
+  background: #ffffff;
+  padding: 24px;
+  border-radius: 14px;
+  width: 1100px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+}
+
+/* ===== TITLE ===== */
+.edit-modal-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+/* ===== GRID ===== */
+.edit-form-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* ===== INPUTS ===== */
+.edit-form-grid input,
+.edit-form-grid textarea {
+  padding: 11px 14px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+}
+
+.edit-form-grid input:focus,
+.edit-form-grid textarea:focus {
+  outline: none;
+  border-color: #16a34a;
+}
+
+.edit-form-grid textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* ===== SPANS ===== */
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-4 {
+  grid-column: span 4;
+}
+
+/* ===== ACTIONS ===== */
+.edit-modal-actions {
+  margin-top: 18px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.save-btn {
+  background: #16a34a;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background: #15803d;
+}
+
+.cancel-btn {
+  background: #e5e7eb;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  cursor: pointer;
+}

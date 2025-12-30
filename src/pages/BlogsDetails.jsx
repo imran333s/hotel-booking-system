@@ -1,103 +1,43 @@
-import React, { useEffect, useState, useContext } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import axios from "axios";
-import AuthContext from "../context/AuthContext";
 import Loader from "../components/Loader";
 
-const HotelDetails = () => {
+const BlogDetails = () => {
   const { id } = useParams();
-  const navigate = useNavigate();
-  const { user } = useContext(AuthContext);
-
-  const [hotel, setHotel] = useState(null);
-  const [checkIn, setCheckIn] = useState("");
-  const [checkOut, setCheckOut] = useState("");
-  const [guests, setGuests] = useState(1);
+  const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
 
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
 
   useEffect(() => {
-    const fetchHotel = async () => {
+    const fetchBlog = async () => {
       try {
-        const res = await axios.get(`${API_URL}/api/hotels/${id}`);
-        setHotel(res.data);
+        const res = await axios.get(`${API_URL}/api/blogs/${id}`);
+        setBlog(res.data);
       } catch (err) {
-        setHotel(null);
+        console.error(err);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchHotel();
+    fetchBlog();
   }, [API_URL, id]);
 
-  const handleBooking = () => {
-    if (!user) {
-      navigate("/login", { state: { from: `/hotels/${id}` } });
-      return;
-    }
-
-    navigate("/booking/confirm", {
-      state: { hotel, checkIn, checkOut, guests },
-    });
-  };
-
-  if (loading) return <Loader text="Loading hotel..." />;
-  if (!hotel) return <p>Hotel not found</p>;
+  if (loading) return <Loader text="Loading blog..." />;
+  if (!blog) return <p>Blog not found.</p>;
 
   return (
-    <div style={{ maxWidth: "1000px", margin: "auto", padding: "40px" }}>
-      <h1>{hotel.name}</h1>
-
+    <div style={{ maxWidth: "800px", margin: "auto", padding: "40px" }}>
+      <h1>{blog.title}</h1>
       <img
-        src={hotel.image}
-        alt={hotel.name}
-        style={{ width: "100%", borderRadius: "12px" }}
+        src={blog.image}
+        alt={blog.title}
+        style={{ width: "100%", borderRadius: "12px", marginBottom: "20px" }}
       />
-
-      <p>{hotel.description}</p>
-      <h3>₹{hotel.pricePerNight} / night</h3>
-
-      {/* BOOKING CARD */}
-      <div
-        style={{
-          marginTop: "30px",
-          padding: "20px",
-          border: "1px solid #ddd",
-          borderRadius: "10px",
-        }}
-      >
-        <h3>Book Your Stay</h3>
-
-        <label>Check-in</label>
-        <input
-          type="date"
-          value={checkIn}
-          onChange={(e) => setCheckIn(e.target.value)}
-        />
-
-        <label>Check-out</label>
-        <input
-          type="date"
-          value={checkOut}
-          onChange={(e) => setCheckOut(e.target.value)}
-        />
-
-        <label>Guests</label>
-        <input
-          type="number"
-          min="1"
-          value={guests}
-          onChange={(e) => setGuests(e.target.value)}
-        />
-
-        <button onClick={handleBooking} style={{ marginTop: "15px" }}>
-          Book Now
-        </button>
-      </div>
+      <p>{blog.content}</p>
     </div>
   );
 };
 
-export default HotelDetails;
+export default BlogDetails;

@@ -1,4 +1,3 @@
-// src/pages/admin/AdminDashboard.jsx
 import React, { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -10,9 +9,11 @@ import BookingManagement from "./BookingManagement";
 import BlogManagement from "./BlogManagement";
 import UserManagement from "./UserManagement";
 import Loader from "../../components/Loader";
-
+import AddHotel from "./AddHotel";
+import AddBlog from "./AddBlog";
+import AddRole from "./AddRole";
 const AdminDashboard = () => {
-  const { user } = useContext(AuthContext); // get logged-in user from context
+  const { user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [activePage, setActivePage] = useState(
@@ -20,54 +21,43 @@ const AdminDashboard = () => {
   );
   const [loading, setLoading] = useState(true);
 
-  // Logout handler
+  // Redirect if user is null or not admin
+  useEffect(() => {
+    if (user === null) return; // still loading
+    if (!user || !["admin", "superadmin"].includes(user.role.toLowerCase())) {
+      navigate("/login"); // redirect non-admins
+    } else {
+      setLoading(false); // valid admin
+    }
+  }, [user, navigate]);
+
   const handleLogout = () => {
     localStorage.removeItem("adminPage");
-    localStorage.removeItem("user"); // optional: remove stored user
+    localStorage.removeItem("user");
+    localStorage.removeItem("token"); // also remove token
     navigate("/login");
   };
 
-  // Check user role and set loading
-  useEffect(() => {
-    if (user === null) {
-      // user context not loaded yet, wait
-      return;
-    }
+  if (loading || !user) return <Loader text="Loading Admin Panel..." />;
 
-    if (!user) {
-      navigate("/login"); // not logged in
-      return;
-    }
-
-    if (!["admin", "superadmin"].includes(user.role.toLowerCase())) {
-      navigate("/"); // non-admins
-      return;
-    }
-
-    setLoading(false); // user is valid admin
-  }, [user, navigate]);
-
-  // Persist active page
-  useEffect(() => {
-    localStorage.setItem("adminPage", activePage);
-  }, [activePage]);
-
-  // Loader while checking
-  if (loading) return <Loader text="Loading Admin Panel..." />;
-
-  // Function to switch modules
   const renderContent = () => {
     switch (activePage) {
       case "dashboard":
         return <AdminDashboardStats />;
       case "hotels":
-        return <HotelManagement />;
+        return <HotelManagement setActivePage={setActivePage} />;
+      case "addHotel":
+        return <AddHotel setActivePage={setActivePage} />;
       case "bookings":
         return <BookingManagement />;
       case "blogs":
         return <BlogManagement />;
+      case "addBlog":
+        return <AddBlog setActivePage={setActivePage} />;
       case "users":
         return <UserManagement />;
+      case "addRole":
+        return <AddRole />;
       default:
         return <AdminDashboardStats />;
     }
@@ -94,11 +84,13 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <div style={{ flex: 1 }}>
-        <AdminHeader
-          adminName={user.name}
-          role={user.role}
-          onLogout={handleLogout}
-        />
+        {user && (
+          <AdminHeader
+            adminName={user.name}
+            role={user.role}
+            onLogout={handleLogout}
+          />
+        )}
         <main style={{ padding: "20px" }}>{renderContent()}</main>
       </div>
     </div>
@@ -108,9 +100,12 @@ const AdminDashboard = () => {
 const sidebarItems = [
   { key: "dashboard", label: "Dashboard" },
   { key: "hotels", label: "Hotel Management" },
+  { key: "addHotel", label: "➕ Add Hotel" },
   { key: "bookings", label: "Booking Management" },
   { key: "blogs", label: "Blog Management" },
+  { key: "addBlog", label: "➕ Add Blog" }, // ✅ NEW
   { key: "users", label: "User / Employee Management" },
+  { key: "addRole", label: "Add Role" },
 ];
 
 const sidebarStyle = {

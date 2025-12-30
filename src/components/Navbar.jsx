@@ -1,47 +1,84 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+// src/components/Navbar.jsx
+import { useContext, useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import AuthContext from "../context/AuthContext";
 import "./Navbar.css";
+
 const Navbar = () => {
-  const { user, logout } = useContext(AuthContext);
+  const { user, logout, loading } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const [scrolled, setScrolled] = useState(false);
+
+  const isHomePage = location.pathname === "/";
 
   const handleLogout = () => {
     logout();
-    navigate("/login");
+    navigate("/");
   };
 
+  // Scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 60);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  if (loading) return null;
+
   return (
-    <header className="navbar">
+    <header
+      className={`navbar 
+        ${scrolled ? "scrolled" : ""} 
+        ${!isHomePage ? "navbar-solid" : ""}
+      `}
+    >
       <div className="navbar-container">
-        <h1 className="logo">Hotel Booking System</h1>
-        <nav className="nav-links">
-          {/* Common links for everyone */}
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/services">Services</Link>
-          <Link to="/blogs">Blogs</Link>
-          <Link to="/contact">Contact</Link>
+        {/* Logo */}
+        <div className="logo">
+          <Link to="/">HotelBooking</Link>
+        </div>
 
-          {!user ? (
-            <>
-              <Link className="btn" to="/login">Login</Link>
-              <Link className="btn-outline" to="/register">Register</Link>
-            </>
-          ) : (
-            <>
-              <span className="username">Hi, {user.name}</span>
+        {/* Nav Menu */}
+        <nav className="nav-menu">
+          <ul>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/about">About</Link></li>
+            <li><Link to="/services">Services</Link></li>
+            <li><Link to="/blogs">Blogs</Link></li>
+            <li><Link to="/contact">Contact</Link></li>
 
-              {/* Dashboard link based on role */}
-              {user.role === "Super Admin" && <Link to="/dashboard/admin">Dashboard</Link>}
-              {user.role === "User" && <Link to="/dashboard/user">Dashboard</Link>}
-              {["Manager","Receptionist","Waiter","Cook"].includes(user.role) && (
-                <Link to="/dashboard/employee">Dashboard</Link>
-              )}
+            {!user ? (
+              <>
+                <li>
+                  <Link className="login-btn" to="/login">Login</Link>
+                </li>
+                <li>
+                  <Link className="register-btn" to="/register">Register</Link>
+                </li>
+              </>
+            ) : (
+              <>
+                <li className="username">Hi, {user.name}</li>
 
-              <button className="btn" onClick={handleLogout}>Logout</button>
-            </>
-          )}
+                {user.role === "Super Admin" && (
+                  <li><Link to="/dashboard/admin">Dashboard</Link></li>
+                )}
+                {user.role === "User" && (
+                  <li><Link to="/dashboard/user">Dashboard</Link></li>
+                )}
+
+                <li>
+                  <button className="login-btn" onClick={handleLogout}>
+                    Logout
+                  </button>
+                </li>
+              </>
+            )}
+          </ul>
         </nav>
       </div>
     </header>

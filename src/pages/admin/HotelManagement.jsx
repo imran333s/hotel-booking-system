@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 import Loader from "../../components/Loader";
-import EditHotelModal from "./EditHotelModal"; // create this modal component
-import HotelDetails from "./HotelDetails"; // create this drawer/view component
+import EditHotelModal from "./EditHotelModal";
+import HotelDetails from "./HotelDetails";
 import "./HotelManagement.css";
 
-const HotelManagement = () => {
+const HotelManagement = ({ setActivePage }) => {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -15,14 +16,10 @@ const HotelManagement = () => {
   const [viewDrawerOpen, setViewDrawerOpen] = useState(false);
   const [selectedHotelId, setSelectedHotelId] = useState(null);
 
-  const [name, setName] = useState("");
-  const [location, setLocation] = useState("");
-  const [price, setPrice] = useState("");
-
   const API_URL = process.env.REACT_APP_API_URL || "http://localhost:5000";
   const token = localStorage.getItem("token");
 
-  // Fetch hotels
+  /* ===== FETCH HOTELS ===== */
   const fetchHotels = async () => {
     try {
       setLoading(true);
@@ -31,7 +28,7 @@ const HotelManagement = () => {
       });
       setHotels(res.data || []);
     } catch (err) {
-      console.error("Failed to load hotels", err);
+      console.error("Failed to fetch hotels", err);
     } finally {
       setLoading(false);
     }
@@ -39,48 +36,27 @@ const HotelManagement = () => {
 
   useEffect(() => {
     fetchHotels();
-  }, [API_URL, token]);
+  }, []);
 
-  // Add hotel
-  const addHotel = async () => {
-    if (!name || !location || !price) return;
-    try {
-      const res = await axios.post(
-        `${API_URL}/api/hotels`,
-        { name, location, pricePerNight: Number(price) },
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
-      setHotels(prev => [...prev, res.data]);
-      setName(""); setLocation(""); setPrice("");
-      Swal.fire("Added!", "Hotel added successfully.", "success");
-    } catch (err) {
-      console.error(err);
-      Swal.fire("Error!", "Failed to add hotel.", "error");
-    }
-  };
-
-  // View hotel
+  /* ===== ACTIONS ===== */
   const handleView = (id) => {
     setSelectedHotelId(id);
     setViewDrawerOpen(true);
   };
 
-  // Edit hotel
   const handleEdit = (hotel) => {
     setSelectedHotel(hotel);
     setModalOpen(true);
   };
 
-  // Delete hotel
   const handleDelete = async (id) => {
     const result = await Swal.fire({
-      title: "Are you sure?",
-      text: "This hotel will be permanently deleted.",
+      title: "Delete Hotel?",
+      text: "This action cannot be undone!",
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Delete",
     });
 
     if (result.isConfirmed) {
@@ -88,8 +64,8 @@ const HotelManagement = () => {
         await axios.delete(`${API_URL}/api/hotels/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setHotels(prev => prev.filter(h => h._id !== id));
-        Swal.fire("Deleted!", "Hotel deleted successfully.", "success");
+        setHotels((prev) => prev.filter((h) => h._id !== id));
+        Swal.fire("Deleted!", "Hotel removed successfully.", "success");
       } catch (err) {
         console.error(err);
         Swal.fire("Error!", "Failed to delete hotel.", "error");
@@ -101,40 +77,30 @@ const HotelManagement = () => {
 
   return (
     <div className="hotel-main-content">
-      <h2 className="hotel-section-title">Hotel Management</h2>
+      {/* ===== HEADER ===== */}
+      <div className="hotel-header">
+        <h2 className="hotel-section-title">Hotel Management</h2>
 
-      {/* Add hotel form */}
-      <div className="hotel-add-form">
-        <input
-          placeholder="Hotel Name"
-          value={name}
-          onChange={e => setName(e.target.value)}
-        />
-        <input
-          placeholder="Location"
-          value={location}
-          onChange={e => setLocation(e.target.value)}
-        />
-        <input
-          placeholder="Price per Night"
-          type="number"
-          value={price}
-          onChange={e => setPrice(e.target.value)}
-        />
-        <button onClick={addHotel}>Add Hotel</button>
+        <button
+          className="primary-btn"
+          onClick={() => setActivePage("addHotel")}
+        >
+          ➕ Add Hotel
+        </button>
       </div>
 
-      {/* Hotel Table */}
+      {/* ===== HOTEL TABLE ===== */}
       <table className="hotel-list-table">
         <thead>
           <tr>
-            <th>S.No</th>
+            <th>#</th>
             <th>Name</th>
             <th>Location</th>
             <th>Price / Night</th>
             <th>Actions</th>
           </tr>
         </thead>
+
         <tbody>
           {hotels.length === 0 ? (
             <tr>
@@ -160,7 +126,7 @@ const HotelManagement = () => {
         </tbody>
       </table>
 
-      {/* Edit Modal */}
+      {/* ===== EDIT MODAL ===== */}
       {modalOpen && selectedHotel && (
         <EditHotelModal
           hotel={selectedHotel}
@@ -170,7 +136,7 @@ const HotelManagement = () => {
         />
       )}
 
-      {/* View Drawer */}
+      {/* ===== VIEW DRAWER ===== */}
       <HotelDetails
         hotelId={selectedHotelId}
         isOpen={viewDrawerOpen}
