@@ -13,7 +13,7 @@ const Home = () => {
             Book hotels, resorts, and rooms at the best prices with comfort and
             convenience.
           </p>
-          <Link to="/services" className="hero-btn">
+          <Link to="/hotels" className="hero-btn">
             Explore Hotels
           </Link>
         </div>

@@ -10,12 +10,14 @@ const Navbar = () => {
   const location = useLocation();
 
   const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const isHomePage = location.pathname === "/";
 
   const handleLogout = () => {
     logout();
     navigate("/");
+    setMobileMenuOpen(false);
   };
 
   // Scroll effect
@@ -26,6 +28,11 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Close menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [location.pathname]);
 
   if (loading) return null;
 
@@ -42,22 +49,50 @@ const Navbar = () => {
           <Link to="/">HotelBooking</Link>
         </div>
 
-        {/* Nav Menu */}
-        <nav className="nav-menu">
+        {/* ✅ HAMBURGER (ONLY ADDITION) */}
+        <div
+          className="hamburger"
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          ☰
+        </div>
+
+        {/* Nav Menu (UNCHANGED CONTENT) */}
+        <nav className={`nav-menu ${mobileMenuOpen ? "open" : ""}`}>
           <ul>
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About</Link></li>
-            <li><Link to="/services">Services</Link></li>
-            <li><Link to="/blogs">Blogs</Link></li>
-            <li><Link to="/contact">Contact</Link></li>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+
+            {/* PRIMARY CTA */}
+            <li>
+              <Link to="/hotels">Hotels</Link>
+            </li>
+
+            <li>
+              <Link to="/services">Services</Link>
+            </li>
+            <li>
+              <Link to="/blogs">Blogs</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
 
             {!user ? (
               <>
                 <li>
-                  <Link className="login-btn" to="/login">Login</Link>
+                  <Link className="login-btn" to="/login">
+                    Login
+                  </Link>
                 </li>
                 <li>
-                  <Link className="register-btn" to="/register">Register</Link>
+                  <Link className="register-btn" to="/register">
+                    Register
+                  </Link>
                 </li>
               </>
             ) : (
@@ -65,10 +100,14 @@ const Navbar = () => {
                 <li className="username">Hi, {user.name}</li>
 
                 {user.role === "Super Admin" && (
-                  <li><Link to="/dashboard/admin">Dashboard</Link></li>
+                  <li>
+                    <Link to="/dashboard/admin">Dashboard</Link>
+                  </li>
                 )}
                 {user.role === "User" && (
-                  <li><Link to="/dashboard/user">Dashboard</Link></li>
+                  <li>
+                    <Link to="/dashboard/user">Dashboard</Link>
+                  </li>
                 )}
 
                 <li>

@@ -6,6 +6,8 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Services from "./components/Services";
 import Contact from "./components/Contact";
+import Hotels from "./pages/Hotels";
+
 import HotelDetails from "./pages/HotelDetails";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -16,6 +18,7 @@ import BlogDetails from "./pages/BlogsDetails";
 import EmployeeDashboard from "./pages/dashboard/EmployeeDashboard";
 import UserDashboard from "./pages/dashboard/UserDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ScrollToTop from "./components/ScrollToTop";
 
 function App() {
   const location = useLocation();
@@ -25,6 +28,7 @@ function App() {
 
   return (
     <>
+      <ScrollToTop />
       {/* ❌ Hide Navbar for Admin */}
       {!isAdminRoute && <Navbar />}
 
@@ -33,6 +37,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/hotels" element={<Hotels />} />
         <Route path="/hotels/:id" element={<HotelDetails />} />
         <Route path="/contact" element={<Contact />} />
 
