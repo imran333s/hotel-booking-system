@@ -1,0 +1,4 @@
+[2025-01-02 10:18:22] INFO  User registered: user@example.com
+[2025-01-02 10:19:01] INFO  User login successful: user@example.com
+[2025-01-02 10:35:44] WARN  Invalid login attempt: wrong password
+[2025-01-02 10:40:12] INFO  Admin login successful: admin@example.com

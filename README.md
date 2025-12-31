@@ -1,70 +1,160 @@
-# Getting Started with Create React App
+# Hotel Booking System – Full Stack Web Application
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📌 Project Overview
+This is a **full-stack hotel booking system** built as part of a **Frontend Developer Intern assignment**.  
+The application supports **user authentication, role-based access, protected dashboards**, and **complete CRUD operations** through a modern and scalable architecture.
 
-## Available Scripts
+The system allows normal users to book hotels and manage their profiles, while admins can manage the entire platform through a dedicated admin panel.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## 🚀 Tech Stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Frontend
+- React.js (Create React App)
+- React Router
+- Axios
+- Tailwind CSS / Bootstrap 
+- JWT-based authentication
+- Role-based protected routes
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Backend
+- Node.js
+- Express.js
+- JWT Authentication
+- bcrypt (Password hashing)
+- RESTful APIs
 
-### `npm test`
+### Database
+- MongoDB (Mongoose)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## 🔐 Authentication & Roles
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### User Roles
+- **User**
+- **Admin** (role-based access control)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Authentication Features
+- User registration & login
+- Password hashing using bcrypt
+- JWT-based authentication
+- Protected routes (user dashboard & admin panel)
+- Secure logout flow
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+---
 
-### `npm run eject`
+## 👤 User Features
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Register & Login
+- View and update user profile
+- Browse available hotels
+- Book hotels
+- View booking history
+- Secure access to personal dashboard
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+---
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## 🛠️ Admin Panel Features
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+Admins have access to a dedicated admin dashboard with full control:
 
-## Learn More
+- User Management (view, update, delete users)
+- Hotel Management (add, edit, delete hotels)
+- Booking Management (view & manage all bookings)
+- Role Management (add & assign roles)
+- Blog Management (create, update, delete blogs)
+- Dashboard analytics (basic)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 📂 Project Structure
 
-### Code Splitting
+hotel-booking-system/
+│
+├── client/ # React frontend
+├── server/ # Node.js backend
+├── logs/ # Application log files
+├── README.md
+└── package.json
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+yaml
+Copy code
 
-### Analyzing the Bundle Size
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## ⚙️ Environment Variables
 
-### Making a Progressive Web App
+Create a `.env` file inside the `server` folder:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+```env
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret
+▶️ How to Run the Project Locally
+1️⃣ Clone the repository
+bash
+Copy code
+git clone https://github.com/your-username/hotel-booking-system.git
+cd hotel-booking-system
+2️⃣ Run Backend
+bash
+Copy code
+cd server
+npm install
+npm start
+3️⃣ Run Frontend
+bash
+Copy code
+cd client
+npm install
+npm start
+Frontend: http://localhost:3000
 
-### Advanced Configuration
+Backend: http://localhost:5000
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+🔗 API Endpoints (Sample)
+Auth
+POST /api/auth/register
 
-### Deployment
+POST /api/auth/login
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+User
+GET /api/users/profile
 
-### `npm run build` fails to minify
+PUT /api/users/profile
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Hotels
+GET /api/hotels
+
+POST /api/hotels (Admin)
+
+PUT /api/hotels/:id (Admin)
+
+DELETE /api/hotels/:id (Admin)
+
+Bookings
+POST /api/bookings
+
+GET /api/bookings/user
+
+GET /api/bookings/all (Admin)
+
+Blogs (Admin)
+POST /api/blogs
+
+PUT /api/blogs/:id
+
+DELETE /api/blogs/:id
+
+Postman collection / API documentation is included in the repository.
+
+📊 Logs
+Sample log files are provided in the /logs directory for:
+
+Authentication events
+
+Booking actions
+
+API errors & requests
